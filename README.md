@@ -15,23 +15,19 @@ Here are the core interfaces of Zentak Aero:
 
 ### 1. Main Flight Dashboard
 The primary flight control interface featuring dual virtual joysticks, real-time telemetry, and quick-access trim controls.
-*(Please save your first uploaded screenshot here as `screenshots/dashboard.png`)*
 ![Main Dashboard](screenshots/dashboard.png)
 
 ### 2. Live PID Tuning (Roll & Pitch)
 A deeply integrated slide-out drawer allowing real-time Proportional, Integral, and Derivative (PID) tuning transmitted via UDP.
-*(Please save your second and third uploaded screenshots here as `screenshots/pid_roll.png` and `screenshots/pid_pitch.png`)*
 ![PID Tuning Roll](screenshots/pid_roll.png)
 ![PID Tuning Pitch](screenshots/pid_pitch.png)
 
-### 4. Flight Logs & Pilot Profile
+### 3. Flight Logs & Pilot Profile
 A sleek, draggable frosted-glass bottom sheet that displays current session metrics and historical flight data.
-*(Please save your fourth uploaded screenshot here as `screenshots/flight_logs.png`)*
 ![Flight Logs](screenshots/flight_logs.png)
 
-### 5. Drone Pairing & Connection (New!)
+### 4. Drone Pairing & Connection (New!)
 The initial launch interface featuring an animated radar, glowing deep-space gradients, and modular UDP connection settings.
-*(Please take a screenshot of the new Pairing screen and save it as `screenshots/pairing_screen.png`)*
 ![Pairing Screen](screenshots/pairing_screen.png)
 
 ---
