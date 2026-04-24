@@ -1,5 +1,7 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../../core/services/firebase_service.dart';
 
 class GlassyFlightLogsSheet extends StatelessWidget {
   const GlassyFlightLogsSheet({Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class GlassyFlightLogsSheet extends StatelessWidget {
         return ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+            filter: ui.ImageFilter.blur(sigmaX: 30, sigmaY: 30),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black.withValues(alpha: 0.45),
@@ -224,14 +226,35 @@ class GlassyFlightLogsSheet extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         
-        // TODO: Firebase Integration -> Replace this static list with a StreamBuilder<QuerySnapshot> 
-        // to listen to real-time flight logs stored in a Firestore 'flight_logs' collection.
-        
-        _buildLogCard("2026-04-23 • 14:30", "12m 45s", "Successful Flight", true),
-        _buildLogCard("2026-04-20 • 09:15", "45m 12s", "Crash Detected - Impact 4G", false),
-        _buildLogCard("2026-04-18 • 16:45", "18m 05s", "Successful Flight", true),
-        _buildLogCard("2026-04-15 • 11:00", "05m 30s", "Battery Critical Auto-Land", false),
-        _buildLogCard("2026-04-10 • 08:20", "22m 10s", "Successful Flight", true),
+        StreamBuilder<QuerySnapshot>(
+          stream: FirebaseService().getFlightLogs(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) return const Text("Error loading logs", style: TextStyle(color: Colors.redAccent));
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator(color: Colors.cyanAccent));
+            }
+
+            final logs = snapshot.data?.docs ?? [];
+            if (logs.isEmpty) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text("No flights recorded yet.", style: TextStyle(color: Colors.white54)),
+              );
+            }
+
+            return Column(
+              children: logs.map((doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                return _buildLogCard(
+                  data['date'] ?? '',
+                  data['duration'] ?? '',
+                  data['status'] ?? '',
+                  data['isSuccess'] ?? true,
+                );
+              }).toList(),
+            );
+          },
+        ),
       ],
     );
   }

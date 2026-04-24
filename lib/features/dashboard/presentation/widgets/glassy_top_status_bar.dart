@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/drone_provider.dart';
 
 class GlassyTopStatusBar extends StatelessWidget {
   final VoidCallback onTuneTap;
@@ -8,6 +10,8 @@ class GlassyTopStatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<DroneProvider>();
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
       child: ClipRRect(
@@ -36,20 +40,20 @@ class GlassyTopStatusBar extends StatelessWidget {
                 _buildStatusItem(
                   icon: Icons.wifi_rounded,
                   iconColor: Colors.blueAccent.shade100,
-                  text: "Signal: Excellent",
+                  text: provider.pingMs > 0 ? "Signal: Stable" : "Searching...",
                 ),
                 
                 // Ping/Latency
-                _buildPingStatus(12),
+                _buildPingStatus(provider.pingMs),
                 
                 // Connection Status
-                _buildConnectionStatus(true),
+                _buildConnectionStatus(provider.pingMs > 0),
                 
                 // IP Address & Tune Button grouped
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildIpAddress("192.168.4.1"),
+                    _buildIpAddress("192.168.4.1"), // TODO: Get from provider if needed
                     const SizedBox(width: 15),
                     Container(
                       height: 25,
@@ -78,6 +82,7 @@ class GlassyTopStatusBar extends StatelessWidget {
       ),
     );
   }
+// ... (rest of the helper methods remain the same)
 
   Widget _buildStatusItem({required IconData icon, required Color iconColor, required String text}) {
     return Row(

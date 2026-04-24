@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "526350635287",
+    "project_id": "zentak-aero",
+    "storage_bucket": "zentak-aero.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526350635287:android:a6bee52eced049f7c0e752",
+        "android_client_info": {
+          "package_name": "com.example.esp32_drone_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAveem1Y5jrdsh2vv1hDl4osQBJwa3koCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

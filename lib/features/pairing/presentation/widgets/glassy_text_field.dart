@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class GlassyTextField extends StatelessWidget {
   final String label;
-  final String defaultValue;
+  final TextEditingController controller;
   final IconData icon;
 
   const GlassyTextField({
     Key? key,
     required this.label,
-    required this.defaultValue,
+    required this.controller,
     required this.icon,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class GlassyTextField extends StatelessWidget {
             border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
           child: TextFormField(
-            initialValue: defaultValue,
+            controller: controller,
             style: const TextStyle(color: Colors.cyanAccent, fontFamily: 'Courier', fontWeight: FontWeight.bold, fontSize: 16),
             decoration: InputDecoration(
               icon: Icon(icon, color: Colors.white54, size: 20),
