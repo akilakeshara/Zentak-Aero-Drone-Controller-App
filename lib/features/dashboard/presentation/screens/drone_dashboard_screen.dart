@@ -10,6 +10,7 @@ import '../widgets/glassy_trim_button.dart';
 import '../widgets/glassy_flight_logs_sheet.dart';
 import '../widgets/glassy_flight_mode_toggles.dart';
 import '../widgets/artificial_horizon.dart';
+import '../../../settings/presentation/screens/settings_screen.dart';
 
 class DroneDashboardScreen extends StatefulWidget {
   const DroneDashboardScreen({Key? key}) : super(key: key);
@@ -92,6 +93,12 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                     children: [
                       GlassyTopStatusBar(
                         onTuneTap: () => setState(() => _isTunerOpen = true),
+                        onSettingsTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const AdvancedSettingsScreen()),
+                          );
+                        },
                       ),
                       Expanded(
                         child: Padding(

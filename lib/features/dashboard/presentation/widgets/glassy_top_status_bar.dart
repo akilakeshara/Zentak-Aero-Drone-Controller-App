@@ -5,8 +5,13 @@ import '../../providers/drone_provider.dart';
 
 class GlassyTopStatusBar extends StatelessWidget {
   final VoidCallback onTuneTap;
+  final VoidCallback onSettingsTap;
 
-  const GlassyTopStatusBar({Key? key, required this.onTuneTap}) : super(key: key);
+  const GlassyTopStatusBar({
+    Key? key,
+    required this.onTuneTap,
+    required this.onSettingsTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +76,19 @@ class GlassyTopStatusBar extends StatelessWidget {
                           border: Border.all(color: Colors.purpleAccent.withValues(alpha: 0.4), width: 1.5),
                         ),
                         child: const Icon(Icons.tune_rounded, color: Colors.cyanAccent, size: 20),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: onSettingsTap,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1.5),
+                        ),
+                        child: const Icon(Icons.settings_rounded, color: Colors.white, size: 20),
                       ),
                     ),
                   ],
