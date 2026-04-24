@@ -9,6 +9,7 @@ import '../widgets/glassy_kill_switch.dart';
 import '../widgets/glassy_trim_button.dart';
 import '../widgets/glassy_flight_logs_sheet.dart';
 import '../widgets/glassy_flight_mode_toggles.dart';
+import '../widgets/artificial_horizon.dart';
 
 class DroneDashboardScreen extends StatefulWidget {
   const DroneDashboardScreen({Key? key}) : super(key: key);
@@ -86,7 +87,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                 fit: BoxFit.contain,
                 child: SizedBox(
                   width: 1000,
-                  height: 480,
+                  height: 550,
                   child: Column(
                     children: [
                       GlassyTopStatusBar(
@@ -114,6 +115,8 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              const ArtificialHorizon(size: 80),
+                              const SizedBox(height: 8),
                               GlassyKillSwitch(
                                 onKill: () {
                                   // TODO: TRIGGER UDP ZERO-THROTTLE EMERGENCY PACKET HERE
@@ -124,11 +127,11 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                               ),
                               const SizedBox(height: 15),
                               _buildTelemetryDashboard(context),
-                              const Spacer(),
-                              _buildFlightLogsButton(context),
-                              const SizedBox(height: 15),
-                              _buildArmButton(context),
                               const SizedBox(height: 10),
+                              _buildFlightLogsButton(context),
+                              const SizedBox(height: 8),
+                              _buildArmButton(context),
+                              const SizedBox(height: 5),
                             ],
                           ),
                         ),
@@ -268,7 +271,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.06),
             borderRadius: BorderRadius.circular(25),

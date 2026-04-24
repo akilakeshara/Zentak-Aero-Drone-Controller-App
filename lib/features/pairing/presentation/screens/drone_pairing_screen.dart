@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
 import '../../../dashboard/presentation/screens/drone_dashboard_screen.dart';
+import '../../../dashboard/providers/drone_provider.dart';
 import '../widgets/animated_radar.dart';
 import '../widgets/glassy_text_field.dart';
 
@@ -15,10 +17,14 @@ class DronePairingScreen extends StatefulWidget {
 class _DronePairingScreenState extends State<DronePairingScreen> with SingleTickerProviderStateMixin {
   bool _isConnecting = false;
   late AnimationController _bgController;
+  late TextEditingController _ipController;
+  late TextEditingController _portController;
 
   @override
   void initState() {
     super.initState();
+    _ipController = TextEditingController(text: "192.168.4.1");
+    _portController = TextEditingController(text: "4210");
     _bgController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 10),
@@ -27,6 +33,8 @@ class _DronePairingScreenState extends State<DronePairingScreen> with SingleTick
 
   @override
   void dispose() {
+    _ipController.dispose();
+    _portController.dispose();
     _bgController.dispose();
     super.dispose();
   }
@@ -36,11 +44,16 @@ class _DronePairingScreenState extends State<DronePairingScreen> with SingleTick
       _isConnecting = true;
     });
     
-    // Simulate connection delay
-    Timer(const Duration(milliseconds: 1500), () {
+    // Update the provider with the user-defined IP/Port
+    final ip = _ipController.text.trim();
+    final port = int.tryParse(_portController.text.trim()) ?? 4210;
+    
+    context.read<DroneProvider>().connectToDrone(ip, port);
+    
+    // Brief delay to show connecting state before transition
+    Timer(const Duration(milliseconds: 1000), () {
       if (!mounted) return;
       
-      // Navigate with a smooth fade transition
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 800),
@@ -126,15 +139,15 @@ class _DronePairingScreenState extends State<DronePairingScreen> with SingleTick
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const GlassyTextField(
+                            GlassyTextField(
                               label: "IP ADDRESS",
-                              defaultValue: "192.168.4.1",
+                              controller: _ipController,
                               icon: Icons.cell_tower_rounded,
                             ),
                             const SizedBox(width: 20),
-                            const GlassyTextField(
+                            GlassyTextField(
                               label: "UDP PORT",
-                              defaultValue: "4210",
+                              controller: _portController,
                               icon: Icons.settings_ethernet_rounded,
                             ),
                           ],

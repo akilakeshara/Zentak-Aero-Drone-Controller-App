@@ -4,9 +4,14 @@ import 'package:provider/provider.dart';
 import 'features/dashboard/presentation/screens/drone_dashboard_screen.dart';
 import 'features/dashboard/providers/drone_provider.dart';
 import 'features/pairing/presentation/screens/drone_pairing_screen.dart';
+import 'core/services/firebase_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase
+  await FirebaseService().initialize();
   
   // Force landscape orientation for the controller
   SystemChrome.setPreferredOrientations([
