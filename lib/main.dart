@@ -6,6 +6,7 @@ import 'features/dashboard/providers/drone_provider.dart';
 import 'features/pairing/presentation/screens/drone_pairing_screen.dart';
 import 'core/services/firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'features/splash/presentation/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class DroneApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Inter',
       ),
-      home: const DronePairingScreen(),
+      home: const ZentakSplashScreen(),
     );
   }
 }

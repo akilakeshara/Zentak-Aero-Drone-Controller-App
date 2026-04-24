@@ -14,7 +14,11 @@ server.on('message', (message, remote) => {
   const data = message.toString();
   
   // Print incoming control data
-  process.stdout.write(`\r📥 Incoming Data: [${data}] from ${remote.address}:${remote.port}   `);
+  if (data.startsWith('PID:')) {
+      console.log(`\x1b[35m🔧 PID Tuning Received: ${data}\x1b[0m from ${remote.address}:${remote.port}`);
+  } else {
+      process.stdout.write(`\r📥 Incoming Data: [${data}] from ${remote.address}:${remote.port}   `);
+  }
 
   // Mock Telemetry Logic: Send mock data back to the app
   // Format: "B:98,P:2,R:-1" (Battery, Pitch, Roll)
