@@ -113,6 +113,41 @@ class DroneProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // PID Values
+  double _pitchP = 1.25;
+  double _pitchI = 0.05;
+  double _pitchD = 0.15;
+  double _rollP = 1.25;
+  double _rollI = 0.05;
+  double _rollD = 0.15;
+
+  double get pitchP => _pitchP;
+  double get pitchI => _pitchI;
+  double get pitchD => _pitchD;
+  double get rollP => _rollP;
+  double get rollI => _rollI;
+  double get rollD => _rollD;
+
+  void syncPID({
+    required double p,
+    required double i,
+    required double d,
+    required String type,
+  }) {
+    // Update local state
+    if (type == 'PITCH') {
+      _pitchP = p; _pitchI = i; _pitchD = d;
+    } else {
+      _rollP = p; _rollI = i; _rollD = d;
+    }
+
+    // Send UDP Packet (Format: PID:P,I,D,TYPE)
+    final packet = "PID:${p.toStringAsFixed(2)},${i.toStringAsFixed(2)},${d.toStringAsFixed(2)},$type";
+    _udpService.send(packet);
+    debugPrint("UDP Sent: $packet");
+    notifyListeners();
+  }
+
   void toggleArm() {
     _isArmed = !_isArmed;
     if (!_isArmed) {

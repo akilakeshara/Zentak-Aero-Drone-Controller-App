@@ -61,6 +61,17 @@ class UdpService {
     }
   }
 
+  /// Send a custom string message via UDP
+  void send(String message) {
+    if (_socket == null) return;
+    final data = utf8.encode(message);
+    try {
+      _socket?.send(data, InternetAddress(_targetIp), _targetPort);
+    } catch (e) {
+      debugPrint("Error sending custom UDP message: $e");
+    }
+  }
+
   void dispose() {
     _socket?.close();
     _telemetryController.close();
