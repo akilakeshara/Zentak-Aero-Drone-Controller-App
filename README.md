@@ -38,11 +38,14 @@ Format: `B:[battery],P:[pitch],R:[roll]`
 
 ## 📦 Getting Started
 
+For a complete walkthrough on how to run the mock server and connect the app, please refer to the **[Full Setup & Run Guide](SETUP_GUIDE.md)**.
+
+### Quick Start:
 1. Clone the repository.
 2. Run `flutter pub get` to install dependencies.
-3. Configure `android/app/google-services.json` for Firebase integration.
-4. Use the provided `mock_drone_server.js` to test without physical hardware.
-5. Build and deploy to your mobile device.
+3. Start the mock server: `node mock_drone_server.js`.
+4. Run the app: `flutter run`.
+5. Build APK: `flutter build apk --release`.
 
 ---
 Developed with ❤️ by Zentak Aero Team.
