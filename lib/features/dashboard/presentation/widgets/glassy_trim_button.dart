@@ -5,7 +5,7 @@ class GlassyTrimButton extends StatefulWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const GlassyTrimButton({Key? key, required this.icon, required this.onTap}) : super(key: key);
+  const GlassyTrimButton({super.key, required this.icon, required this.onTap});
 
   @override
   State<GlassyTrimButton> createState() => _GlassyTrimButtonState();

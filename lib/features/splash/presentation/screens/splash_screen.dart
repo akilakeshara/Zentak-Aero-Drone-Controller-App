@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../pairing/presentation/screens/drone_pairing_screen.dart';
 
 class ZentakSplashScreen extends StatefulWidget {
-  const ZentakSplashScreen({Key? key}) : super(key: key);
+  const ZentakSplashScreen({super.key});
 
   @override
   State<ZentakSplashScreen> createState() => _ZentakSplashScreenState();
@@ -74,9 +74,9 @@ class _ZentakSplashScreenState extends State<ZentakSplashScreen> with SingleTick
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.8),
+                  Colors.black.withValues(alpha: 0.8),
                   Colors.transparent,
-                  Colors.black.withOpacity(0.8),
+                  Colors.black.withValues(alpha: 0.8),
                 ],
               ),
             ),
@@ -102,7 +102,7 @@ class _ZentakSplashScreenState extends State<ZentakSplashScreen> with SingleTick
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.cyanAccent.withOpacity(0.3),
+                                color: Colors.cyanAccent.withValues(alpha: 0.3),
                                 blurRadius: 40,
                                 spreadRadius: 10,
                               )
@@ -123,7 +123,7 @@ class _ZentakSplashScreenState extends State<ZentakSplashScreen> with SingleTick
                             letterSpacing: 10,
                             shadows: [
                               Shadow(
-                                color: Colors.cyanAccent.withOpacity(0.8),
+                                color: Colors.cyanAccent.withValues(alpha: 0.8),
                                 blurRadius: 20,
                               )
                             ],
@@ -133,7 +133,7 @@ class _ZentakSplashScreenState extends State<ZentakSplashScreen> with SingleTick
                         Text(
                           "NEXT-GEN DRONE CONTROL",
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withValues(alpha: 0.6),
                             fontSize: 12,
                             letterSpacing: 4,
                             fontWeight: FontWeight.w500,
@@ -156,7 +156,7 @@ class _ZentakSplashScreenState extends State<ZentakSplashScreen> with SingleTick
               child: SizedBox(
                 width: 200,
                 child: LinearProgressIndicator(
-                  backgroundColor: Colors.white.withOpacity(0.1),
+                  backgroundColor: Colors.white.withValues(alpha: 0.1),
                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.cyanAccent),
                   minHeight: 2,
                 ),

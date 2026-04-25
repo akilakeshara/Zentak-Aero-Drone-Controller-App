@@ -8,12 +8,12 @@ class GlassyJoystick extends StatefulWidget {
   final double size;
 
   const GlassyJoystick({
-    Key? key,
+    super.key,
     required this.onChanged,
     required this.onRelease,
     required this.isLeft,
     this.size = 200.0,
-  }) : super(key: key);
+  });
 
   @override
   State<GlassyJoystick> createState() => _GlassyJoystickState();
@@ -83,14 +83,14 @@ class _GlassyJoystickState extends State<GlassyJoystick> {
             height: _baseSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.08),
+              color: Colors.white.withValues(alpha: 0.08),
               border: Border.all(
-                color: Colors.white.withOpacity(0.25),
+                color: Colors.white.withValues(alpha: 0.25),
                 width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.blueAccent.withOpacity(0.15),
+                  color: Colors.blueAccent.withValues(alpha: 0.15),
                   blurRadius: 25,
                   spreadRadius: 5,
                 )
@@ -103,12 +103,12 @@ class _GlassyJoystickState extends State<GlassyJoystick> {
                 Container(
                   width: _baseSize,
                   height: 1,
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.white.withValues(alpha: 0.15),
                 ),
                 Container(
                   width: 1,
                   height: _baseSize,
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.white.withValues(alpha: 0.15),
                 ),
                 // Movable Stick Component
                 Transform.translate(
@@ -120,17 +120,17 @@ class _GlassyJoystickState extends State<GlassyJoystick> {
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          Colors.cyanAccent.withOpacity(0.8),
-                          Colors.blueAccent.withOpacity(0.3),
+                          Colors.cyanAccent.withValues(alpha: 0.8),
+                          Colors.blueAccent.withValues(alpha: 0.3),
                         ],
                       ),
                       border: Border.all(
-                        color: Colors.cyanAccent.withOpacity(0.6),
+                        color: Colors.cyanAccent.withValues(alpha: 0.6),
                         width: 2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.cyanAccent.withOpacity(0.4),
+                          color: Colors.cyanAccent.withValues(alpha: 0.4),
                           blurRadius: 20,
                           spreadRadius: 3,
                         )
@@ -142,7 +142,7 @@ class _GlassyJoystickState extends State<GlassyJoystick> {
                         height: _stickSize * 0.35,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                         ),
                       ),
                     ),

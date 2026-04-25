@@ -8,10 +8,10 @@ class GlassyPIDTunerDrawer extends StatefulWidget {
   final bool isOpen;
 
   const GlassyPIDTunerDrawer({
-    Key? key,
+    super.key,
     required this.onClose,
     required this.isOpen,
-  }) : super(key: key);
+  });
 
   @override
   State<GlassyPIDTunerDrawer> createState() => _GlassyPIDTunerDrawerState();

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class GlassyFlightModeToggles extends StatefulWidget {
   final Function(String mode) onModeChanged;
 
-  const GlassyFlightModeToggles({Key? key, required this.onModeChanged}) : super(key: key);
+  const GlassyFlightModeToggles({super.key, required this.onModeChanged});
 
   @override
   State<GlassyFlightModeToggles> createState() => _GlassyFlightModeTogglesState();

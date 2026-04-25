@@ -6,7 +6,7 @@ import '../../providers/drone_provider.dart';
 class ArtificialHorizon extends StatelessWidget {
   final double size;
 
-  const ArtificialHorizon({Key? key, this.size = 150}) : super(key: key);
+  const ArtificialHorizon({super.key, this.size = 150});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,6 @@ class HorizonPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
 
     // 1. Rotate for Roll
     canvas.save();

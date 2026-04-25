@@ -8,7 +8,7 @@ import '../widgets/animated_radar.dart';
 import '../widgets/glassy_text_field.dart';
 
 class DronePairingScreen extends StatefulWidget {
-  const DronePairingScreen({Key? key}) : super(key: key);
+  const DronePairingScreen({super.key});
 
   @override
   State<DronePairingScreen> createState() => _DronePairingScreenState();
