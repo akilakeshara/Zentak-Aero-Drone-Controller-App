@@ -8,10 +8,10 @@ class GlassyTopStatusBar extends StatelessWidget {
   final VoidCallback onSettingsTap;
 
   const GlassyTopStatusBar({
-    Key? key,
+    super.key,
     required this.onTuneTap,
     required this.onSettingsTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class GlassyTopStatusBar extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildIpAddress("192.168.4.1"), // TODO: Get from provider if needed
+                    _buildIpAddress(provider.targetIp),
                     const SizedBox(width: 15),
                     Container(
                       height: 25,

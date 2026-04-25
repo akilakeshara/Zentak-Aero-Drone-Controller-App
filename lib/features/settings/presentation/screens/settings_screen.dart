@@ -1,10 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../dashboard/providers/drone_provider.dart';
 
 class AdvancedSettingsScreen extends StatefulWidget {
-  const AdvancedSettingsScreen({Key? key}) : super(key: key);
+  const AdvancedSettingsScreen({super.key});
 
   @override
   State<AdvancedSettingsScreen> createState() => _AdvancedSettingsScreenState();
@@ -103,9 +100,9 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Column(
         children: [
@@ -134,9 +131,9 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,7 +142,8 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: _primaryGlowColor,
+            activeThumbColor: _primaryGlowColor,
+            activeTrackColor: _primaryGlowColor.withValues(alpha: 0.5),
           ),
         ],
       ),
@@ -157,9 +155,9 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,11 +188,11 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               shape: BoxShape.circle,
-              border: Border.all(color: isSelected ? Colors.white : color.withOpacity(0.5), width: isSelected ? 3 : 1),
+              border: Border.all(color: isSelected ? Colors.white : color.withValues(alpha: 0.5), width: isSelected ? 3 : 1),
               boxShadow: [
-                if (isSelected) BoxShadow(color: color.withOpacity(0.5), blurRadius: 15)
+                if (isSelected) BoxShadow(color: color.withValues(alpha: 0.5), blurRadius: 15)
               ],
             ),
             child: Center(child: Container(width: 15, height: 15, decoration: BoxDecoration(color: color, shape: BoxShape.circle))),
@@ -215,7 +213,7 @@ class _AdvancedSettingsScreenState extends State<AdvancedSettingsScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           gradient: LinearGradient(colors: [_primaryGlowColor, _primaryGlowColor.withBlue(255)]),
-          boxShadow: [BoxShadow(color: _primaryGlowColor.withOpacity(0.3), blurRadius: 20)],
+          boxShadow: [BoxShadow(color: _primaryGlowColor.withValues(alpha: 0.3), blurRadius: 20)],
         ),
         child: const Center(
           child: Text("APPLY CHANGES", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: 3)),

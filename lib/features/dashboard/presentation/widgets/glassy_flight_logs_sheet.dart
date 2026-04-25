@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/services/firebase_service.dart';
 
 class GlassyFlightLogsSheet extends StatelessWidget {
-  const GlassyFlightLogsSheet({Key? key}) : super(key: key);
+  const GlassyFlightLogsSheet({super.key});
 
   static void show(BuildContext context) {
     showModalBottomSheet(

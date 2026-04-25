@@ -11,8 +11,14 @@ class DroneProvider extends ChangeNotifier {
   int _yaw = 127;
   int _pitch = 127;
   int _roll = 127;
-  
   bool _isArmed = false;
+  
+  String _targetIp = "192.168.4.1";
+  int _targetPort = 4210;
+  
+  // Trims
+  int _pitchTrim = 0;
+  int _rollTrim = 0;
   
   // Real-time telemetry data
   int _batteryPercent = 100;
@@ -20,6 +26,7 @@ class DroneProvider extends ChangeNotifier {
   int _droneRoll = 0;
   int _pingMs = 0;
   DateTime _lastPacketTime = DateTime.now();
+  DateTime? _armedTime;
   
   Timer? _transmitTimer;
   StreamSubscription? _telemetrySubscription;
@@ -40,6 +47,8 @@ class DroneProvider extends ChangeNotifier {
   }
 
   void connectToDrone(String ip, int port) {
+    _targetIp = ip;
+    _targetPort = port;
     _udpService.updateTarget(ip, port);
     notifyListeners();
   }
@@ -71,8 +80,8 @@ class DroneProvider extends ChangeNotifier {
     _udpService.sendControlData(
       throttle: _throttle,
       yaw: _yaw,
-      pitch: _pitch,
-      roll: _roll,
+      pitch: (_pitch + _pitchTrim).clamp(0, 255),
+      roll: (_roll + _rollTrim).clamp(0, 255),
       isArmed: _isArmed,
     );
   }
@@ -85,6 +94,8 @@ class DroneProvider extends ChangeNotifier {
   bool get isArmed => _isArmed;
   int get batteryPercent => _batteryPercent;
   int get pingMs => _pingMs;
+  String get targetIp => _targetIp;
+  int get targetPort => _targetPort;
 
   void updateLeftJoystick(double x, double y) {
     _yaw = ((x + 1.0) / 2.0 * 255).clamp(0, 255).toInt();
@@ -150,18 +161,44 @@ class DroneProvider extends ChangeNotifier {
 
   void toggleArm() {
     _isArmed = !_isArmed;
-    if (!_isArmed) {
+    if (_isArmed) {
+      _armedTime = DateTime.now();
+    } else {
       // Log the flight session when disarming (end of flight)
+      final duration = _armedTime != null 
+          ? DateTime.now().difference(_armedTime!)
+          : Duration.zero;
+          
+      final durationStr = "${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
+
       FirebaseService().logFlight(
         date: DateTime.now(),
-        duration: "00:05:23", // TODO: Calculate actual duration
+        duration: durationStr,
         status: "Successful Flight",
         isSuccess: true,
         maxSpeed: 45.0,
         maxAltitude: 120.0,
       );
       _throttle = 0; 
+      _armedTime = null;
     }
+    notifyListeners();
+  }
+
+  void emergencyStop() {
+    _isArmed = false;
+    _throttle = 0;
+    _udpService.send("EMERGENCY_STOP");
+    notifyListeners();
+  }
+
+  void updatePitchTrim(int delta) {
+    _pitchTrim += delta;
+    notifyListeners();
+  }
+
+  void updateRollTrim(int delta) {
+    _rollTrim += delta;
     notifyListeners();
   }
 

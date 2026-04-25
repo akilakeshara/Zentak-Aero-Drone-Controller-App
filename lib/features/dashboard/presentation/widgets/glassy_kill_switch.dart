@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class GlassyKillSwitch extends StatefulWidget {
   final VoidCallback onKill;
 
-  const GlassyKillSwitch({Key? key, required this.onKill}) : super(key: key);
+  const GlassyKillSwitch({super.key, required this.onKill});
 
   @override
   State<GlassyKillSwitch> createState() => _GlassyKillSwitchState();

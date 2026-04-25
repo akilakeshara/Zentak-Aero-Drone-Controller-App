@@ -13,7 +13,7 @@ import '../widgets/artificial_horizon.dart';
 import '../../../settings/presentation/screens/settings_screen.dart';
 
 class DroneDashboardScreen extends StatefulWidget {
-  const DroneDashboardScreen({Key? key}) : super(key: key);
+  const DroneDashboardScreen({super.key});
 
   @override
   State<DroneDashboardScreen> createState() => _DroneDashboardScreenState();
@@ -68,17 +68,17 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
           Positioned(
             top: -150,
             left: -100,
-            child: _buildGlowingOrb(Colors.pinkAccent.withOpacity(0.3), 400),
+            child: _buildGlowingOrb(Colors.pinkAccent.withValues(alpha: 0.3), 400),
           ),
           Positioned(
             bottom: -200,
             right: -100,
-            child: _buildGlowingOrb(Colors.cyanAccent.withOpacity(0.2), 500),
+            child: _buildGlowingOrb(Colors.cyanAccent.withValues(alpha: 0.2), 500),
           ),
           Positioned(
             top: 50,
             right: 250,
-            child: _buildGlowingOrb(Colors.purpleAccent.withOpacity(0.25), 300),
+            child: _buildGlowingOrb(Colors.purpleAccent.withValues(alpha: 0.25), 300),
           ),
 
           // 3. Main Foreground Dashboard Layout
@@ -126,9 +126,8 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                               const SizedBox(height: 8),
                               GlassyKillSwitch(
                                 onKill: () {
-                                  // TODO: TRIGGER UDP ZERO-THROTTLE EMERGENCY PACKET HERE
                                   if (context.read<DroneProvider>().isArmed) {
-                                    context.read<DroneProvider>().toggleArm();
+                                    context.read<DroneProvider>().emergencyStop();
                                   }
                                 },
                               ),
@@ -151,10 +150,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                             children: [
                               GlassyTrimButton(
                                 icon: Icons.keyboard_double_arrow_up_rounded,
-                                onTap: () {
-                                  // TODO: Pitch Trim Forward (+ value)
-                                  // e.g. context.read<DroneProvider>().onTrimAdjust('pitch', 1);
-                                }
+                                onTap: () => context.read<DroneProvider>().updatePitchTrim(1),
                               ),
                               const SizedBox(height: 5),
                               Row(
@@ -162,9 +158,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                                 children: [
                                   GlassyTrimButton(
                                     icon: Icons.keyboard_double_arrow_left_rounded,
-                                    onTap: () {
-                                      // TODO: Roll Trim Left (- value)
-                                    }
+                                    onTap: () => context.read<DroneProvider>().updateRollTrim(-1),
                                   ),
                                   const SizedBox(width: 8),
                                   GlassyJoystick(
@@ -176,18 +170,14 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
                                   const SizedBox(width: 8),
                                   GlassyTrimButton(
                                     icon: Icons.keyboard_double_arrow_right_rounded,
-                                    onTap: () {
-                                      // TODO: Roll Trim Right (+ value)
-                                    }
+                                    onTap: () => context.read<DroneProvider>().updateRollTrim(1),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 5),
                               GlassyTrimButton(
                                 icon: Icons.keyboard_double_arrow_down_rounded,
-                                onTap: () {
-                                  // TODO: Pitch Trim Backward (- value)
-                                }
+                                onTap: () => context.read<DroneProvider>().updatePitchTrim(-1),
                               ),
                             ],
                           ),
@@ -280,12 +270,12 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.white.withValues(alpha: 0.06),
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.white.withOpacity(0.3), width: 1.5),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1.5),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.25),
+                color: Colors.black.withValues(alpha: 0.25),
                 blurRadius: 30,
               )
             ],
@@ -295,7 +285,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
             children: [
               GlassyFlightModeToggles(
                 onModeChanged: (mode) {
-                  // TODO: Send UDP Mode Packet ('ANGLE' or 'ACRO')
+                  context.read<DroneProvider>().syncPID(p: 1, i: 1, d: 1, type: mode); 
                 },
               ),
               const SizedBox(height: 12),
@@ -334,7 +324,7 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
             fontSize: 10,
             letterSpacing: 1.2,
             fontWeight: FontWeight.w500,
@@ -359,16 +349,16 @@ class _DroneDashboardScreenState extends State<DroneDashboardScreen> with Single
           borderRadius: BorderRadius.circular(35),
           gradient: LinearGradient(
             colors: isArmed
-                ? [Colors.redAccent.shade400.withOpacity(0.85), Colors.deepOrangeAccent.withOpacity(0.85)]
-                : [Colors.greenAccent.shade400.withOpacity(0.7), Colors.tealAccent.shade400.withOpacity(0.7)],
+                ? [Colors.redAccent.shade400.withValues(alpha: 0.85), Colors.deepOrangeAccent.withValues(alpha: 0.85)]
+                : [Colors.greenAccent.shade400.withValues(alpha: 0.7), Colors.tealAccent.shade400.withValues(alpha: 0.7)],
           ),
           border: Border.all(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
             width: 2,
           ),
           boxShadow: [
             BoxShadow(
-              color: isArmed ? Colors.redAccent.withOpacity(0.6) : Colors.greenAccent.withOpacity(0.5),
+              color: isArmed ? Colors.redAccent.withValues(alpha: 0.6) : Colors.greenAccent.withValues(alpha: 0.5),
               blurRadius: 25,
               spreadRadius: 4,
             )
